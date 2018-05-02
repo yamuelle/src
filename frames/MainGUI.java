@@ -6,6 +6,7 @@
 package frames;
 
 import ai.InputNeuron;
+import ai.NeuralNet;
 import java.util.ArrayList;
 
 /**
@@ -24,6 +25,13 @@ public class MainGUI extends javax.swing.JFrame {
     
     public void printToConsole(String p){
         taConsole.append("\n"+p);
+    }
+    public void calculateCounts(NeuralNet net){
+        tfCountInputNeurons.setText(Integer.toString(net.inputs.size()));
+      tfCountWNh1.setText(Integer.toString(net.hidden1.size()));
+      tfCountWNh2.setText(Integer.toString(net.hidden2.size()));
+      tfCountWNout.setText(Integer.toString(net.outputs.size()));
+      tfCountWeights.setText(Integer.toString(net.weights.size()));
     }
 
     public void init(){
@@ -46,6 +54,7 @@ public class MainGUI extends javax.swing.JFrame {
        
       n.randomizeWeights(5);
        
+        calculateCounts(n);
        
        n.createFullMesh();
        
