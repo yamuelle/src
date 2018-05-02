@@ -118,6 +118,7 @@ public class NeuralNet {
     }
     
     public void randomizeWeights(int maxWeight){
+        weights.clear();
          for(int i = 0 ; i<sizeOfNet ; i++ ){
            if(((long)(Math.random()*100)+System.currentTimeMillis())%2==0){
                weights.add(0-(new Random().nextDouble()*maxWeight));

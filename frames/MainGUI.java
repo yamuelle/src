@@ -8,6 +8,7 @@ package frames;
 import ai.InputNeuron;
 import ai.NeuralNet;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -15,74 +16,67 @@ import java.util.ArrayList;
  */
 public class MainGUI extends javax.swing.JFrame {
 
+    ai.NeuralNet n = new ai.NeuralNet(16);
+
     /**
      * Creates new form MainGUI
      */
     public MainGUI() {
         initComponents();
-        init();
-    }
-    
-    public void printToConsole(String p){
-        taConsole.append("\n"+p);
-    }
-    public void calculateCounts(NeuralNet net){
-        tfCountInputNeurons.setText(Integer.toString(net.inputs.size()));
-      tfCountWNh1.setText(Integer.toString(net.hidden1.size()));
-      tfCountWNh2.setText(Integer.toString(net.hidden2.size()));
-      tfCountWNout.setText(Integer.toString(net.outputs.size()));
-      tfCountWeights.setText(Integer.toString(net.weights.size()));
+        initTest();
     }
 
-    public void init(){
-          ai.NeuralNet n = new ai.NeuralNet(16);
-       ArrayList<InputNeuron> in = new ArrayList<>();
-       
-       in.add(n.addInput());
-       in.add(n.addInput());
-       in.add(n.addInput());
-       in.add(n.addInput());
-       
-       n.addHiddenOne();
-       n.addHiddenOne();
-       
-       n.addHiddenTwo();
-       n.addHiddenTwo();
-       
-       n.addOutput();
-       n.addOutput();
-       
-      n.randomizeWeights(5);
-       
-        calculateCounts(n);
-       
-       n.createFullMesh();
-       
-       int index = 1;
-       for(InputNeuron inp : in){
-           inp.setInput(index++);
-       }
-       //System.out.println(n.print());
-       double[] out = n.compute();
-       printToConsole(Integer.toString(out.length));
-       printToConsole("Inputs");
-       for(InputNeuron inp : in){
-           printToConsole(Double.toString(inp.getValue()));
-       }
-       printToConsole("Weights :");
-       for(Double d : n.weights){
-           if(d>=0)printToConsole(Double.toString(d));
-           else{
-               printToConsole(Double.toString(d));
-           }
-       }
-     printToConsole("Outputs :");
-       for(int i = 0;i<out.length;i++){
-           printToConsole(Double.toString(out[i]));
-           //System.out.println(out.length);
-           
-       }
+    public void printToConsole(String p) {
+        taConsole.append(p+"\n" );
     }
+
+    public void calculateCounts(NeuralNet net) {
+        tfCountInputNeurons.setText(Integer.toString(net.inputs.size()));
+        tfCountWNh1.setText(Integer.toString(net.hidden1.size()));
+        tfCountWNh2.setText(Integer.toString(net.hidden2.size()));
+        tfCountWNout.setText(Integer.toString(net.outputs.size()));
+        tfCountWeights.setText(Integer.toString(net.weights.size()));
+    }
+
+    public void initTest() {
+
+        ArrayList<InputNeuron> in = new ArrayList<>();
+
+        in.add(n.addInput());
+        in.add(n.addInput());
+        in.add(n.addInput());
+        in.add(n.addInput());
+
+        n.addHiddenOne();
+        n.addHiddenOne();
+
+        n.addHiddenTwo();
+        n.addHiddenTwo();
+
+        n.addOutput();
+        n.addOutput();
+
+        n.randomizeWeights(5);
+
+        calculateCounts(n);
+
+        n.createFullMesh();
+
+        int index = 1;
+        for (InputNeuron inp : in) {
+            inp.setInput(index++);
+        }
+        //System.out.println(n.print());
+        double[] out = n.compute();
+        printToConsole(Integer.toString(out.length));
+        printToConsole("Inputs");
+        for (InputNeuron inp : in) {
+            printToConsole(Double.toString(inp.getValue()));
+        }
+
+       
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -257,7 +251,40 @@ public class MainGUI extends javax.swing.JFrame {
 
     private void tfInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfInputActionPerformed
         String in = tfInput.getText();
-        printToConsole(in);
+        tfInput.setText("");
+
+        switch (in) {
+            case "printw":
+                printToConsole("Weights :");
+                for (Double d : n.weights) {
+                    if (d >= 0) {
+                        printToConsole(Double.toString(d));
+                    } else {
+                        printToConsole(Double.toString(d));
+                    }
+
+                }
+                printToConsole("");
+                break;
+            case "clear":
+                taConsole.setText("");
+                break;
+            case "compute":
+                double[] out = n.compute();
+                printToConsole("Outputs :");
+                for (int i = 0; i < out.length; i++) {
+                    printToConsole(Double.toString(out[i]));
+                    //System.out.println(out.length);
+                }
+                printToConsole("");
+                        
+                break;
+            case "randw":
+                
+                n.randomizeWeights(Integer.parseInt(JOptionPane.showInputDialog("Bitte maximales Gewicht eingeben")));
+                n.createFullMesh();
+                printToConsole("Weights Randomized and applied");
+        }
     }//GEN-LAST:event_tfInputActionPerformed
 
     /**
@@ -267,7 +294,7 @@ public class MainGUI extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
