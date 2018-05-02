@@ -10,6 +10,8 @@ package ai;
  * @author yannikmuller
  */
 public class Connection {
+    
+    
     double weight;
     Neuron link;
     

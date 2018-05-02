@@ -43,6 +43,7 @@ public class Main {
        //}
        n.createFullMesh();
        
+       
        int index = 1;
        for(InputNeuron inp : in){
            inp.setInput(index++);

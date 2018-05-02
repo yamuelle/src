@@ -340,4 +340,5 @@ public class MainGUI extends javax.swing.JFrame {
     private javax.swing.JTextField tfCountWeights;
     private javax.swing.JTextField tfInput;
     // End of variables declaration//GEN-END:variables
+
 }

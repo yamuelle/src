@@ -15,6 +15,7 @@ public class WorkingNeuron extends Neuron {
     
     ArrayList<Connection> connections = new ArrayList<>();
     
+    
     double activation;
     
     @Override

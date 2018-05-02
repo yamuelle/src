@@ -14,6 +14,7 @@ public class InputNeuron extends Neuron{
     private double activation ; 
     
     
+    
     public void setInput(double input){
         activation =  input;
     }
